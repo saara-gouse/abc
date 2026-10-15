@@ -1053,6 +1053,179 @@ Answer: Machine Learning models learn patterns from data and make predictions or
 '''
 }
 
+
+viva_questions = {1: ['Q1. What is the time and space complexity of DFS?\n'
+     'Answer: Time complexity: O(V + E), where V is the number of vertices (nodes) and E is the number of edges '
+     '(connections), assuming an adjacency-list representation. DFS may visit every node and inspect every edge. Space '
+     'complexity: O(V) in the worst case because the visited set and stack can store up to V nodes. In simple terms, '
+     'the time depends on how many nodes and connections the graph has, while memory depends mainly on how many nodes '
+     'must be tracked.',
+     'Q2. Why does DFS use a Stack?\n'
+     'Answer: DFS uses a stack because a stack follows LIFO: Last In, First Out. The most recently added node is '
+     'explored first, so the search can continue deeper along one route before returning to earlier choices. When it '
+     "reaches a dead end, it backtracks by taking another node from the stack. In the manual's code, stack.pop() "
+     'removes the last item, and stack.extend(...) adds neighbouring nodes.'],
+ 2: ['Q1. Why is BFS guaranteed to find the shortest path while DFS is not?\n'
+     'Answer: BFS explores nodes level by level: first all nodes one edge away, then all nodes two edges away, and so '
+     'on. Therefore, in an unweighted graph, the first time BFS reaches the goal, it has found a path with the minimum '
+     'number of edges. DFS follows one route deeply and might reach the goal through a much longer route before '
+     'checking a shorter one. This guarantee assumes each edge has equal cost.',
+     'Q2. What happens if the graph has weighted edges with different values?\n'
+     'Answer: Ordinary BFS does not guarantee the lowest-cost path when edges have different weights, because it '
+     'counts edges rather than their costs. For example, a route with two edges costing 10 each may be worse than a '
+     "route with three edges costing 1 each. Dijkstra's algorithm is suitable for non-negative edge weights; A* can "
+     'also be used when a suitable heuristic estimate toward the goal is available.'],
+ 3: ['Q1. What is backtracking search?\n'
+     'Answer: Backtracking is a problem-solving technique that builds a solution one choice at a time. If a choice '
+     'makes the solution impossible or violates a rule, the algorithm undoes that choice and tries another. In the '
+     'N-Queen problem, queens are placed row by row. If no column is safe for the current row, the algorithm returns '
+     'to the previous row and moves that queen to another column.',
+     'Q2. How does the code check for diagonal conflicts in a single line?\n'
+     'Answer: The expression abs(r - br) == abs(c - bc) checks whether two queens are the same diagonal distance '
+     'apart. Here, r and c are the row and column of the new queen, while br and bc are the row and column of an '
+     'already placed queen. Two squares share a diagonal when the absolute row difference equals the absolute column '
+     'difference. The code uses != to accept a placement only when this diagonal-conflict condition is false. It also '
+     'checks c != bc to prevent two queens sharing a column.'],
+ 4: ['Q1. What is the recurrence relation and final time complexity of Tower of Hanoi?\n'
+     'Answer: The recurrence relation is T(n) = 2T(n-1) + 1. To move n disks, the algorithm first moves n-1 disks to '
+     'the auxiliary rod, moves the largest disk to the destination, and then moves the n-1 disks onto it. Solving the '
+     'recurrence gives 2^n - 1 moves, so the time complexity is O(2^n). For example, 3 disks require 7 moves. The '
+     'number of moves grows exponentially as disks are added.',
+     'Q2. Can this problem be implemented iteratively?\n'
+     'Answer: Yes. Recursion is the common approach because the problem naturally breaks into smaller versions of '
+     'itself, but an iterative solution is possible. It can use an explicit stack to store the steps that recursion '
+     'would normally keep in function calls, or use a mathematical move pattern based on disk count and move number. '
+     'The iterative version must still obey the rule that a larger disk cannot be placed on a smaller disk.'],
+ 5: ["Q1. What is the 'Local Maxima' trap in Hill Climbing?\n"
+     'Answer: A local maximum is a position whose value is better than all nearby positions, but it is not the best '
+     'value across the entire search space. Hill climbing only accepts a neighbouring state if it improves the score, '
+     'so it may stop at this smaller peak because reaching a better peak would require temporarily moving downhill. A '
+     'global maximum, by contrast, is the best value in the whole search space.',
+     'Q2. How can you modify Hill Climbing to bypass local maxima?\n'
+     'Answer: One method is random restart: run hill climbing again from a different randomly selected starting point. '
+     'This gives the algorithm another chance to find a better peak. Another method is simulated annealing, which '
+     'sometimes permits a worse move with a controlled probability, especially early in the search. These methods '
+     'reduce the chance of getting stuck, although they do not automatically guarantee the global optimum in every '
+     'implementation.'],
+ 6: ['Q1. What search strategy is used in this implementation?\n'
+     'Answer: The implementation uses Breadth-First Search (BFS). It stores candidate paths in a queue and removes the '
+     'oldest path first, using FIFO (First In, First Out) order. It generates possible boat crossings, rejects unsafe '
+     'or repeated states, and continues until it reaches the goal state. Because each crossing is treated as one step, '
+     'BFS finds a solution with the fewest crossings when a solution exists.',
+     'Q2. Why must we check constraints on both the left and right banks?\n'
+     "Answer: The puzzle's safety rule must hold on both riverbanks. On any bank where missionaries are present, they "
+     'must not be outnumbered by cannibals; otherwise, the state is invalid. If there are zero missionaries on a bank, '
+     'the rule is not violated there because there is nobody to be outnumbered. Checking only the starting bank could '
+     'allow an unsafe arrangement on the opposite bank, so both sides must be validated after every move.'],
+ 7: ["Q1. What is an 'Admissible Heuristic'?\n"
+     'Answer: An admissible heuristic is an estimate h(n) of the remaining cost from node n to the goal that never '
+     'exceeds the true minimum remaining cost, written h(n) <= h*(n). A* combines the cost already paid, g(n), with '
+     'the estimated remaining cost, h(n), using f(n) = g(n) + h(n). With the required conditions—particularly an '
+     'admissible heuristic and appropriate graph-search handling—A* can find an optimal least-cost path. A '
+     'straight-line distance that never exceeds actual travel distance is a common example.',
+     'Q2. What happens if h(n) is set to 0 everywhere?\n'
+     'Answer: If h(n) = 0 for every node, then f(n) = g(n) + 0 = g(n). A* therefore chooses paths based only on the '
+     "cost accumulated so far, behaving like Dijkstra's algorithm in the usual non-negative-weight setting. It no "
+     'longer uses an estimate to guide the search toward the goal, so it may explore more nodes, but the heuristic '
+     'cannot overestimate because it is always zero.'],
+ 8: ['Q1. How does an AND-OR graph differ from a standard search graph?\n'
+     'Answer: In a standard path-search problem, a node commonly represents alternatives: the search can choose one '
+     'next route, which is an OR choice. An AND-OR graph can also represent a task that requires several sub-problems '
+     'to be solved together. An OR branch needs one suitable alternative; an AND branch requires all its listed child '
+     'tasks. For example, completing a project might require both designing the interface AND setting up the database, '
+     'while choosing Android OR iOS is an alternative.',
+     'Q2. Why is AO* called an interactive search algorithm?\n'
+     'Answer: AO* repeatedly evaluates the current problem decomposition and updates estimated costs as it explores. '
+     'It expands promising parts of the AND-OR graph, calculates the cost of alternatives, and propagates updated '
+     'values back toward parent nodes. This top-down exploration and bottom-up cost updating work together to refine '
+     "the selected solution graph. Here, 'interactive' refers to the algorithm's iterative refinement of the search "
+     'and cost estimates, not necessarily interaction with a human user.'],
+ 9: ['Q1. When should you use the median instead of the mean to impute missing values?\n'
+     'Answer: Use the median when a numerical column is strongly skewed or contains extreme outliers. The mean adds '
+     'all values and divides by their count, so a very large or very small value can pull it away from a typical '
+     'observation. The median is the middle value after sorting and is less affected by extreme values. For a roughly '
+     'symmetric column without major outliers, the mean may be reasonable. The choice should depend on the data '
+     'distribution and context.',
+     'Q2. What is the difference between data imputation and data deletion?\n'
+     'Answer: Imputation replaces a missing value with an estimate, such as the mean, median, or mode, so the row can '
+     'remain in the dataset. Deletion removes a row or column containing missing or unsuitable data. Imputation '
+     'preserves more records but can introduce bias if the replacement is inappropriate. Deletion is simpler, but it '
+     "can discard useful information or leave too little data. The manual's example uses fillna() for imputation and a "
+     'condition to remove implausible ages.'],
+ 10: ['Q1. What does an R² score of 0.85 indicate?\n'
+      'Answer: An R² score of 0.85 means the model explains about 85% of the observed variation in the target values '
+      'relative to a baseline that predicts the target mean, on the data used for evaluation. It is a measure of fit, '
+      'not a statement that 85% of predictions are exactly correct. The remaining variation may come from noise, '
+      'missing predictors, or limitations of the model. R² should be considered alongside other metrics and the test '
+      'data results.',
+      'Q2. What is the cost function minimized by Linear Regression?\n'
+      'Answer: Ordinary least-squares linear regression chooses coefficients to minimize the sum of squared residuals. '
+      "A residual is the difference between an actual target value and the model's predicted value. Squaring makes "
+      'errors positive and penalizes larger errors more strongly. Mean Squared Error (MSE) is the average of these '
+      'squared errors; minimizing RSS (sum of squared residuals) or MSE gives the same fitted coefficients when the '
+      'dataset size is fixed.'],
+ 11: ["Q1. Why can't we use standard linear regression for categorical classification tasks?\n"
+      'Answer: Linear regression predicts an unrestricted numerical value, which can be below 0 or above 1. Those '
+      'values are not suitable as probabilities for a binary class, and a straight-line fit is not designed to model a '
+      'categorical outcome. Logistic regression instead converts a linear score into a value between 0 and 1 and uses '
+      'that probability to classify an example. Linear regression can be adapted for some purposes, but it is '
+      'generally not the appropriate standard model for classification.',
+      'Q2. What does the Sigmoid function do mathematically?\n'
+      'Answer: The sigmoid function is σ(z) = 1 / (1 + e^(-z)). It takes any real number z and maps it to a value '
+      'strictly between 0 and 1. Logistic regression interprets this output as the estimated probability of the '
+      'positive class. A threshold—often 0.5—can convert the probability into a class label: for example, 0.8 becomes '
+      'class 1 and 0.2 becomes class 0 when the threshold is 0.5.'],
+ 12: ['Q1. What is Gini Impurity?\n'
+      'Answer: Gini impurity measures how mixed the class labels are inside a decision-tree node. A node containing '
+      'only one class has Gini impurity 0, meaning it is pure. A node containing a mixture of classes has a higher '
+      'value. The tree evaluates candidate splits and can choose one that reduces impurity, producing child nodes that '
+      'contain more consistent labels. For classification, Gini impurity is commonly calculated as 1 - sum(p_i^2), '
+      'where p_i is the proportion of class i in that node.',
+      'Q2. How can you prevent a decision tree from overfitting?\n'
+      'Answer: Overfitting happens when a tree learns details and noise in its training data so closely that it '
+      'performs poorly on unseen examples. Limit its complexity by setting max_depth, increasing min_samples_split or '
+      'min_samples_leaf, or pruning branches that add little predictive value. Evaluate performance on held-out test '
+      'data rather than relying only on training accuracy. These controls encourage the tree to learn general patterns '
+      'instead of memorizing the training set.'],
+ 13: ['Q1. What are Support Vectors?\n'
+      "Answer: Support vectors are the training examples closest to an SVM's decision boundary. They are important "
+      'because they determine the position of the separating boundary and the margin around it. Points farther away '
+      'usually have less direct influence on the boundary. In simple terms, they are the critical examples that help '
+      'define where one class ends and another begins.',
+      "Q2. What is the 'Kernel Trick' in SVM?\n"
+      'Answer: The kernel trick lets an SVM model certain nonlinear class boundaries by calculating relationships '
+      'between data points as if they were represented in a higher-dimensional feature space. It avoids explicitly '
+      'constructing every coordinate in that space. A linear kernel creates a linear boundary; other kernels, such as '
+      'RBF, can represent more complex boundaries. The trick is useful when the classes cannot be separated well by a '
+      'straight line in the original feature space.'],
+ 14: ['Q1. Is K-Means sensitive to initial centroid placement?\n'
+      'Answer: Yes. K-Means begins with K centroids, and different initial positions can lead to different final '
+      'clusters. Poor starting positions may produce a solution with higher within-cluster variation or a local '
+      "optimum. The manual uses init='k-means++', which chooses initial centroids in a way that tends to spread them "
+      'apart and often improves the result. Running the algorithm multiple times with n_init also helps reduce '
+      'dependence on one initialization.',
+      'Q2. How do you determine the optimal number of clusters (K) for a dataset?\n'
+      'Answer: The Elbow Method runs K-Means for several K values and plots inertia, which measures the within-cluster '
+      'sum of squared distances. Choose a K near the point where adding more clusters stops producing a large '
+      "improvement—the 'elbow'. The Silhouette Score is another method; it compares how close a point is to its own "
+      'cluster versus other clusters, with higher average scores generally indicating better-separated clusters. '
+      'Neither method guarantees one universally correct K, so domain knowledge also matters.'],
+ 15: ['Q1. Why must data preprocessing steps be documented inside a production case study deployment?\n'
+      'Answer: Documentation records how raw data is cleaned and converted into the format expected by the model. It '
+      'should describe handling of missing values, outliers, data types, scaling, and feature selection where '
+      'relevant. This makes the pipeline reproducible and helps developers apply the same transformations during '
+      'training and prediction. Without consistent preprocessing, a production model may receive unexpected inputs, '
+      'fail, or produce unreliable predictions. Documentation also helps with debugging, auditing, and maintenance.',
+      'Q2. How do Search Algorithms and Machine Learning models complement each other in an integrated system?\n'
+      'Answer: Machine Learning models learn patterns from data and make predictions or classifications—for example, '
+      'identifying a package from a camera image. Search algorithms use a defined state space, possible actions, '
+      'costs, and constraints to choose a route or sequence of actions—for example, using A* to guide a warehouse '
+      'robot around obstacles. In an integrated system, a model can provide information about the environment while a '
+      'search algorithm plans what to do with that information. They solve different but complementary parts of the '
+      'overall problem.']}
+
+
+
 def main():
    
     while True:
@@ -1069,6 +1242,7 @@ def main():
             continue
        
         print(EXERCISES[number].strip())
+        print(viva_questions[number].strip())
         
 
 if __name__ == "__main__":
